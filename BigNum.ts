@@ -62,7 +62,7 @@ export class BigNum {
      * @returns Sum of BigNum and a
      */
     add(other: string | number | bigint | BigNum): BigNum {
-        let otherVal: BigNum = new BigNum(other);
+        let otherVal: BigNum = new BigNum(other, this.numDecimals);
         otherVal.setValue(this.value + otherVal.value)
         return new BigNum(otherVal, this.numDecimals);
     }
@@ -73,7 +73,7 @@ export class BigNum {
      * @returns Difference between BigNum and b
      */
     subtract(other: string | number | bigint | BigNum): BigNum {
-        let otherVal: BigNum = new BigNum(other);
+        let otherVal: BigNum = new BigNum(other, this.numDecimals);
         otherVal.setValue(this.value - otherVal.value)
         return new BigNum(otherVal, this.numDecimals);
     }
@@ -84,7 +84,7 @@ export class BigNum {
      * @returns Multiplication of BigNum and b
      */
     multiply(other: string | number | bigint | BigNum): BigNum {
-        let otherVal: BigNum = new BigNum(other);
+        let otherVal: BigNum = new BigNum(other, this.numDecimals);
         let intermediate: bigint = this.value * otherVal.value / (10n ** BigInt(this.numDecimals));
         if((((intermediate * 2n) / (10n ** BigInt(this.numDecimals))) % 2n) === 1n){
             //Half step up rounding. If the initial division has a decimal >= .5, then doubling then dividing and then modulusing will be 1 if the decimal was >= .5
@@ -100,7 +100,7 @@ export class BigNum {
      * @returns BigNum divided by b
      */
     divide(other: string | number | bigint | BigNum): BigNum {
-        let otherVal: BigNum = new BigNum(other);
+        let otherVal: BigNum = new BigNum(other, this.numDecimals);
         let intermediate: bigint = this.value * (10n ** BigInt(this.numDecimals)) / otherVal.value; // Multiply by 10^numDecimals now, so that decimals are correct
         if((((intermediate * 2n) / (10n ** BigInt(this.numDecimals))) % 2n) === 1n){
             //Half step up rounding. If the initial division has a decimal >= .5, then doubling then dividing and then modulusing will be 1 if the decimal was >= .5
